@@ -1,0 +1,185 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 270 50% 4%;
+    --foreground: 270 15% 90%;
+    --card: 270 40% 8%;
+    --card-foreground: 270 15% 90%;
+    --popover: 270 40% 8%;
+    --popover-foreground: 270 15% 90%;
+    --primary: 270 100% 65%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 280 40% 12%;
+    --secondary-foreground: 270 15% 90%;
+    --muted: 270 20% 15%;
+    --muted-foreground: 270 10% 55%;
+    --accent: 320 80% 55%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 270 30% 20%;
+    --input: 270 30% 15%;
+    --ring: 270 100% 65%;
+    --radius: 0.75rem;
+
+    --sidebar-background: 270 40% 6%;
+    --sidebar-foreground: 270 15% 90%;
+    --sidebar-primary: 270 100% 65%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 270 30% 15%;
+    --sidebar-accent-foreground: 270 15% 90%;
+    --sidebar-border: 270 30% 20%;
+    --sidebar-ring: 270 100% 65%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Rajdhani', sans-serif;
+  }
+}
+
+/* Glitch animations */
+@keyframes glitch-1 {
+  0%, 100% { clip-path: inset(0 0 100% 0); transform: translate(0); }
+  5% { clip-path: inset(40% 0 30% 0); transform: translate(-3px, 0); }
+  10% { clip-path: inset(70% 0 10% 0); transform: translate(3px, 0); }
+  15% { clip-path: inset(10% 0 60% 0); transform: translate(-2px, 0); }
+  20% { clip-path: inset(0 0 100% 0); transform: translate(0); }
+}
+
+@keyframes glitch-2 {
+  0%, 100% { clip-path: inset(0 0 100% 0); transform: translate(0); }
+  5% { clip-path: inset(20% 0 50% 0); transform: translate(3px, 0); }
+  10% { clip-path: inset(50% 0 20% 0); transform: translate(-3px, 0); }
+  15% { clip-path: inset(80% 0 5% 0); transform: translate(2px, 0); }
+  20% { clip-path: inset(0 0 100% 0); transform: translate(0); }
+}
+
+@keyframes neon-pulse {
+  0%, 100% {
+    box-shadow: 0 0 5px hsl(var(--primary) / 0.5),
+                0 0 20px hsl(var(--primary) / 0.3),
+                0 0 40px hsl(var(--primary) / 0.1);
+  }
+  50% {
+    box-shadow: 0 0 10px hsl(var(--primary) / 0.7),
+                0 0 30px hsl(var(--primary) / 0.5),
+                0 0 60px hsl(var(--primary) / 0.2);
+  }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-20px) scale(1.05); }
+}
+
+@keyframes loading-bar {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+@keyframes text-flicker {
+  0%, 100% { opacity: 1; }
+  92% { opacity: 1; }
+  93% { opacity: 0.3; }
+  94% { opacity: 1; }
+  96% { opacity: 0.5; }
+  97% { opacity: 1; }
+}
+
+@keyframes soul-drain {
+  0% { opacity: 0; transform: scale(0.8) translateY(10px); filter: blur(4px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+}
+
+@layer components {
+  .glitch-text {
+    position: relative;
+  }
+
+  .glitch-text::before,
+  .glitch-text::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .glitch-text::before {
+    color: hsl(var(--accent));
+    animation: glitch-1 3s infinite linear;
+  }
+
+  .glitch-text::after {
+    color: hsl(var(--primary));
+    animation: glitch-2 3s infinite linear;
+  }
+
+  .neon-border {
+    border: 1px solid hsl(var(--primary) / 0.5);
+    animation: neon-pulse 2s ease-in-out infinite;
+  }
+
+  .neon-text {
+    text-shadow: 0 0 10px hsl(var(--primary) / 0.7),
+                 0 0 20px hsl(var(--primary) / 0.5),
+                 0 0 40px hsl(var(--primary) / 0.3);
+  }
+
+  .bg-animated-gradient {
+    background: linear-gradient(
+      135deg,
+      hsl(270 50% 4%) 0%,
+      hsl(280 60% 8%) 25%,
+      hsl(270 50% 6%) 50%,
+      hsl(300 40% 8%) 75%,
+      hsl(270 50% 4%) 100%
+    );
+    background-size: 400% 400%;
+    animation: gradient-shift 15s ease infinite;
+  }
+
+  .floating-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.3;
+    animation: float 8s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  .loading-bar-fill {
+    animation: loading-bar 3s ease-in-out forwards;
+  }
+
+  .text-flicker {
+    animation: text-flicker 4s infinite;
+  }
+
+  .soul-drain-in {
+    animation: soul-drain 0.8s ease-out forwards;
+  }
+
+  .reyna-shadow {
+    box-shadow: 0 0 60px hsl(var(--primary) / 0.15),
+                0 0 120px hsl(var(--primary) / 0.08),
+                inset 0 0 60px hsl(var(--primary) / 0.05);
+  }
+}
